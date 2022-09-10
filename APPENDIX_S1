@@ -512,7 +512,8 @@ ss.marginal()
 ps = pathSampler(file="output/virus_MUSSE_linkages_0-4.out", powerColumnName="power", likelihoodColumnName="likelihood")
 ps.marginal()
 
-# Other models test conduct the same code
+# Other models test conduct the same code 
+# Model comparisonwe can skip the JointAncestral CharacterState and Stochastic Mapping reconstruction
 q()
 
 
