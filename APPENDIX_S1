@@ -18,7 +18,7 @@ NUM_STATES = 6
 DATASET = "phylum_0-5"
 
 ### Read in the data
-observed_phylogeny <- readTrees("tutorial_structure/data/virus_new_midpoint.treefile.nex")[1]
+observed_phylogeny <- readTrees("tutorial_structure/data/virus_midpoint.treefile.nex")[1]
 data <- readCharacterData("tutorial_structure/data/virus_"+DATASET+".nex")
 
 # Get some useful variables from the data. We need these later on.
@@ -121,10 +121,10 @@ timetree.clampCharData( data )
 ### workspace model wrapper ###
 mymodel = model(rate_matrix)
 
-### set up the monitors that will output2 parameter values to file and screen
-monitors.append( mnModel(filename="output2/virus_BiSSE_"+DATASET+".log", printgen=1) )
-monitors.append( mnJointConditionalAncestralState(tree=timetree, cdbdp=timetree, type="Standard", printgen=1, withTips=true, withStartStates=false, filename="output2/virus_BiSSE_"+DATASET+"_anc_states.log") )
-monitors.append( mnStochasticCharacterMap(cdbdp=timetree, filename="output2/virus_BiSSE_"+DATASET+"_stoch_map.log", printgen=1) )
+### set up the monitors that will output parameter values to file and screen
+monitors.append( mnModel(filename="output/virus_BiSSE_"+DATASET+".log", printgen=1) )
+monitors.append( mnJointConditionalAncestralState(tree=timetree, cdbdp=timetree, type="Standard", printgen=1, withTips=true, withStartStates=false, filename="output/virus_BiSSE_"+DATASET+"_anc_states.log") )
+monitors.append( mnStochasticCharacterMap(cdbdp=timetree, filename="output/virus_BiSSE_"+DATASET+"_stoch_map.log", printgen=1) )
 monitors.append( mnScreen(printgen=10, speciation, extinction) )
 
 
@@ -145,21 +145,21 @@ mymcmc.run(generations=10000, tuningInterval=200)
 ##############################
 
 
-anc_states = readAncestralStateTrace("output2/virus_BiSSE_"+DATASET+"_anc_states.log")
+anc_states = readAncestralStateTrace("output/virus_BiSSE_"+DATASET+"_anc_states.log")
 anc_tree = ancestralStateTree(tree=observed_phylogeny,
                               ancestral_state_trace_vector=anc_states,
                               include_start_states=false,
-                              file="output2/virus_BiSSE_"+DATASET+"_anc_states_results.tree",
+                              file="output/virus_BiSSE_"+DATASET+"_anc_states_results.tree",
                               burnin=0.1,
                               summary_statistic="MAP",
                               site=1)
 
 
-anc_state_trace = readAncestralStateTrace("output2/virus_BiSSE_"+DATASET+"_stoch_map.log")
+anc_state_trace = readAncestralStateTrace("output/virus_BiSSE_"+DATASET+"_stoch_map.log")
 characterMapTree(observed_phylogeny,
                  anc_state_trace,
-                 character_file="output2/virus_BiSSE_"+DATASET+"_stoch_map_character.tree",
-                 posterior_file="output2/virus_BiSSE_"+DATASET+"_stoch_map_posterior.tree",
+                 character_file="output/virus_BiSSE_"+DATASET+"_stoch_map_character.tree",
+                 posterior_file="output/virus_BiSSE_"+DATASET+"_stoch_map_posterior.tree",
                  burnin=0.1,
                  reconstruction="marginal")
 
@@ -167,7 +167,7 @@ q()
 
 ################################################################################
 #
-# APPENDIX S1-2
+# APPENDIX S2-2
 # MuSSE_host_4_states
 #
 #
@@ -179,8 +179,9 @@ q()
 # Reading in the Data #
 #######################
 
+
 NUM_STATES = 4
-DATASET = "phylum"
+DATASET = "new_phylum"
 
 ### Read in the data
 observed_phylogeny <- readTrees("tutorial_structure/data/virus_new_midpoint.treefile.nex")[1]
@@ -286,10 +287,10 @@ timetree.clampCharData( data )
 ### workspace model wrapper ###
 mymodel = model(rate_matrix)
 
-### set up the monitors that will output2 parameter values to file and screen
-monitors.append( mnModel(filename="output2/virus_BiSSE_"+DATASET+".log", printgen=1) )
-monitors.append( mnJointConditionalAncestralState(tree=timetree, cdbdp=timetree, type="Standard", printgen=1, withTips=true, withStartStates=false, filename="output2/virus_BiSSE_"+DATASET+"_anc_states.log") )
-monitors.append( mnStochasticCharacterMap(cdbdp=timetree, filename="output2/virus_BiSSE_"+DATASET+"_stoch_map.log", printgen=1) )
+### set up the monitors that will output parameter values to file and screen
+monitors.append( mnModel(filename="output/virus_BiSSE_"+DATASET+".log", printgen=1) )
+monitors.append( mnJointConditionalAncestralState(tree=timetree, cdbdp=timetree, type="Standard", printgen=1, withTips=true, withStartStates=false, filename="output/virus_BiSSE_"+DATASET+"_anc_states.log") )
+monitors.append( mnStochasticCharacterMap(cdbdp=timetree, filename="output/virus_BiSSE_"+DATASET+"_stoch_map.log", printgen=1) )
 monitors.append( mnScreen(printgen=10, speciation, extinction) )
 
 
@@ -310,21 +311,21 @@ mymcmc.run(generations=10000, tuningInterval=200)
 ##############################
 
 
-anc_states = readAncestralStateTrace("output2/virus_BiSSE_"+DATASET+"_anc_states.log")
+anc_states = readAncestralStateTrace("output/virus_BiSSE_"+DATASET+"_anc_states.log")
 anc_tree = ancestralStateTree(tree=observed_phylogeny,
                               ancestral_state_trace_vector=anc_states,
                               include_start_states=false,
-                              file="output2/virus_BiSSE_"+DATASET+"_anc_states_results.tree",
+                              file="output/virus_BiSSE_"+DATASET+"_anc_states_results.tree",
                               burnin=0.1,
                               summary_statistic="MAP",
                               site=1)
 
 
-anc_state_trace = readAncestralStateTrace("output2/virus_BiSSE_"+DATASET+"_stoch_map.log")
+anc_state_trace = readAncestralStateTrace("output/virus_BiSSE_"+DATASET+"_stoch_map.log")
 characterMapTree(observed_phylogeny,
                  anc_state_trace,
-                 character_file="output2/virus_BiSSE_"+DATASET+"_stoch_map_character.tree",
-                 posterior_file="output2/virus_BiSSE_"+DATASET+"_stoch_map_posterior.tree",
+                 character_file="output/virus_BiSSE_"+DATASET+"_stoch_map_character.tree",
+                 posterior_file="output/virus_BiSSE_"+DATASET+"_stoch_map_posterior.tree",
                  burnin=0.1,
                  reconstruction="marginal")
 
@@ -332,7 +333,7 @@ q()
 
 ################################################################################
 #
-# APPENDIX S1-3
+# APPENDIX S2-3
 # MuSSE_genus_virus
 #
 #
@@ -495,3 +496,23 @@ characterMapTree(observed_phylogeny,
                  reconstruction="marginal")
 
 q()
+
+######### Model Comparisons ############################################################
+# Calculate marginal likelihood using Bayes Factors and path sampling and stepping-stone
+
+pow_p = powerPosterior(mymodel, moves, monitors, "outputPP/virus_MUSSE_linkages_0-4.out", cats=50)
+
+pow_p.burnin(generations=10000, tuningInterval=100)  # No need if we run this immediately after mymcmc.run
+
+pow_p.run(generations=1000)
+# Note: Different filename (outputPP/output) is for record the values of ss.marginal and ps.marginal
+ss = steppingStoneSampler(file="output/virus_MUSSE_linkages_0-4.out", powerColumnName="power", likelihoodColumnName="likelihood")
+ss.marginal()
+
+ps = pathSampler(file="output/virus_MUSSE_linkages_0-4.out", powerColumnName="power", likelihoodColumnName="likelihood")
+ps.marginal()
+
+# Other models test conduct the same code
+q()
+
+
